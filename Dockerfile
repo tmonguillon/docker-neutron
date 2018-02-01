@@ -32,4 +32,4 @@ RUN apk add --no-cache --virtual build-deps \
 #    && rm -rf /opt/* \
 #    && rm -rf /var/cache/apk/* \
     && apk del build-deps
-CMD[]
+CMD []
