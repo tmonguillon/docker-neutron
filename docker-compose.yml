@@ -1,0 +1,44 @@
+version: '2'
+services:
+  mysql:
+    image: mysql
+    container_name: mysql
+    hostname: mysql
+    restart: always
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - /etc/timezone:/etc/timezone
+    environment:
+      MYSQL_ROOT_PASSWORD: MYSQL_DBPASS
+
+  neutron:
+    build:
+      context: .
+    image: openstack-neutron:ubuntu-pike-sfc
+    depends_on:
+      - mysql
+    image: openstack-neutron:ubuntu-pike-sfc
+    hostname: neutron
+    links:
+      - mysql
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    ports:
+      - 9696:9696
+#      - "35357:35357"
+#      - "5000:5000"
+    restart: always
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - /etc/timezone:/etc/timezone
+      - /lib/modules:/lib/modules
+    environment:
+      MYSQL_ROOT_PASSWORD: MYSQL_DBPASS
+      OS_TENANT_NAME: admin
+      OS_USERNAME: admin
+      OS_PASSWORD: password
+
+#volumes:
+#  shared:
+#    driver: local 
