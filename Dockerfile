@@ -17,7 +17,8 @@ RUN apt-get -q update \
                             openvswitch-switch \
                             supervisor \
     && easy_install pip \
-    && pip install networking-sfc
+    && pip install networking-sfc \
+    && mkdir -p /var/run/openvswitch
 
 WORKDIR /opt
 COPY neutron.sql /opt/neutron.sql

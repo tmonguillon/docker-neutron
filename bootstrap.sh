@@ -29,5 +29,6 @@ neutron-db-manage \
   --subproject networking-sfc \
   upgrade head
 
+/usr/bin/ovsdb-tool create /etc/openvswitch/conf.db /usr/share/openvswitch/vswitch.ovsschema
 #/etc/init.d/openvswitch-switch start
 /usr/bin/supervisord
