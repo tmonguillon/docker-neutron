@@ -5,6 +5,8 @@ services:
     container_name: mysql
     hostname: mysql
     restart: always
+    ports:
+      - 3306:3306
     volumes:
       - /etc/localtime:/etc/localtime
       - /etc/timezone:/etc/timezone
@@ -19,25 +21,25 @@ services:
       - mysql
     image: openstack-neutron:ubuntu-pike-sfc
     hostname: neutron
-    links:
-      - mysql
     cap_add:
       - NET_ADMIN
       - SYS_MODULE
+    network_mode: host
     ports:
       - 9696:9696
-#      - "35357:35357"
-#      - "5000:5000"
     restart: always
     volumes:
       - /etc/localtime:/etc/localtime
       - /etc/timezone:/etc/timezone
       - /lib/modules:/lib/modules
+      - /var/run/openvswitch:/var/run/openvswitch
+      - /etc/openvswitch/conf.db:/etc/openvswitch/conf.db
     environment:
       MYSQL_ROOT_PASSWORD: MYSQL_DBPASS
       OS_TENANT_NAME: admin
       OS_USERNAME: admin
       OS_PASSWORD: password
+      LOCAL_IP: ${LOCAL_IP}
 
 #volumes:
 #  shared:
